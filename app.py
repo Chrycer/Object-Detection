@@ -23,7 +23,7 @@ def process_image(image_path):
     image = cv2.imread(image_path)
     if image is None:
         print("Error: Could not read image.")
-        return
+        return None, None, None
 
     # Perform object detection
     results = model.predict(source=image, save=False, save_txt=False, conf=0.5)
@@ -68,18 +68,51 @@ def process_image(image_path):
         })
         print(f"Results saved to Firestore and image uploaded: {image_url}")
 
-        # Optionally, remove the local copy after uploading
+        # Save detections as a JSON file locally
+        json_filename = f"{name}.json"
+        with open(json_filename, 'w') as json_file:
+            json.dump({"detected_objects": detections, "image_url": image_url}, json_file)
+
+        # Upload JSON file to Firebase Storage
+        json_blob = bucket.blob(f"json_results/{json_filename}")
+        json_blob.upload_from_filename(json_filename)
+        json_blob.make_public()
+        json_url = json_blob.public_url
+
+        # Optionally, remove the local copies after uploading
         os.remove(annotated_image_path)
+        os.remove(json_filename)
+
+        # Return detections, image URL, and JSON URL
+        return detections, image_url, json_url
 
     except Exception as e:
         print(f"Error in Firebase operation: {e}")
+        return None, None, None
 
 # Flask App to create API
 app = Flask(__name__)
 
 @app.route('/', methods=['GET'])
 def home():
-    return jsonify({"message": "Welcome to YOLO Detection API"}), 200
+    # Retrieve the latest detection from Firestore
+    try:
+        # Get the most recent document from the 'detections' collection
+        docs = db.collection('detections').order_by('results', direction=firestore.Query.DESCENDING).limit(1).stream()
+        
+        detection_data = None
+        for doc in docs:
+            detection_data = doc.to_dict()
+        
+        if detection_data:
+            return jsonify({
+                "detected_objects": detection_data.get('results', []),
+                "image_url": detection_data.get('image_url', "")
+            }), 200
+        else:
+            return jsonify({"message": "No detections found"}), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 @app.route('/detect', methods=['POST'])
 def detect():
@@ -87,8 +120,18 @@ def detect():
     if not image_path:
         return jsonify({"error": "No image path provided"}), 400
 
-    process_image(image_path)
-    return jsonify({"status": "Detection completed"}), 200
+    # Process the image and get the detection results
+    detections, image_url, json_url = process_image(image_path)
+
+    if detections is None:
+        return jsonify({"error": "Error processing the image"}), 500
+
+    # Return the results directly to the client (Thunkable) with JSON file link
+    return jsonify({
+        "detected_objects": detections,
+        "image_url": image_url,
+        "json_file_url": json_url
+    }), 200
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8080)
