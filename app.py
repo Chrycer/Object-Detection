@@ -28,7 +28,7 @@ def process_image(image_path):
     # Perform object detection
     results = model.predict(source=image, save=False, save_txt=False, conf=0.5)
 
-    # Extract detected objects and their confidence scores
+    # Extract detected objects and their coordinates
     detections = []
     for result in results:
         for box in result.boxes:
@@ -46,30 +46,40 @@ def process_image(image_path):
             }
             detections.append(detection)
 
-    # Save the annotated image locally
-    annotated_image_path = f"annotated_{os.path.basename(image_path)}"
-    cv2.imwrite(annotated_image_path, image)
+    try:
+        # Generate a unique name for the image and document
+        name = ''.join(choices(ascii_letters + digits, k=8))
+        annotated_image_path = f"{name}.jpg"
+        
+        # Save the annotated image locally
+        cv2.imwrite(annotated_image_path, image)
 
-    # Upload annotated image to Firebase Storage
-    blob = bucket.blob(f"annotated_images/{annotated_image_path}")
-    blob.upload_from_filename(annotated_image_path)
-    blob.make_public()
-    image_url = blob.public_url
+        # Upload annotated image to Firebase Storage
+        blob = bucket.blob(f"annotated_images/{name}.jpg")
+        blob.upload_from_filename(annotated_image_path)
+        blob.make_public()
+        image_url = blob.public_url
 
-    # Save results to Firestore
-    name = ''.join(choices(ascii_letters + digits, k=8))
-    doc_ref = db.collection('detections').document(name)
-    doc_ref.set({
-        "results": detections,
-        "image_url": image_url
-    })
-    print(f"Results saved to Firestore and image uploaded: {image_url}")
+        # Save detection results to Firestore
+        doc_ref = db.collection('detections').document(name)
+        doc_ref.set({
+            "results": detections,
+            "image_url": image_url
+        })
+        print(f"Results saved to Firestore and image uploaded: {image_url}")
 
-    # Optionally, remove the local copy after uploading
-    os.remove(annotated_image_path)
+        # Optionally, remove the local copy after uploading
+        os.remove(annotated_image_path)
+
+    except Exception as e:
+        print(f"Error in Firebase operation: {e}")
 
 # Flask App to create API
 app = Flask(__name__)
+
+@app.route('/', methods=['GET'])
+def home():
+    return jsonify({"message": "Welcome to YOLO Detection API"}), 200
 
 @app.route('/detect', methods=['POST'])
 def detect():
@@ -81,4 +91,4 @@ def detect():
     return jsonify({"status": "Detection completed"}), 200
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=8080)

@@ -1,6 +1,4 @@
-
 Flask
 opencv-python-headless
 ultralytics
 firebase-admin
-gunicorn

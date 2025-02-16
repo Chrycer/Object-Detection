@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "accenture-a5bf3",
+  "private_key_id": "2886fc401dfbab3ff5eb0d91198d5a5e75a3a2e5",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDJbZ7Hv06RwwC8\n1q4eFhXyV8g4Brv88MxyhRYG3ijObSDslwjiNViKa1F3Gwej5wHezGe1KESDhDOH\n8D5Egg5dCCHFc/ru1CDKm6I0VbCX6KhMe7KuRZv5LhR1DmwD6Jxm+1wfNcfFzIfO\n1xKeQEXYIFPPExpphSNqGG+ukwrr0x1S0OZnmxlAObna7w50px/m2ZGwCWNTfIYF\nO4u8A5tY87wWyF/ftgKZNRKyEYxUgHzwfsJrvmDfEMl/0UqDtl2qFF+rHOK2yVim\n+ggd0Bn2FKNXIGC4WBuPcNeAOfsJMSjgGZgo71WvctuXKIO8gXG3Z6vOEWwJCseE\nfpaBeFzfAgMBAAECggEADBuqTUCLNQjfTPqsqcNTG2e6cd+5wikpaQLmAZCuLEZ0\nEbS8hHiHc36i/YFi8q/KtX1dCI88mxlBzbybyZt1yJLaENf5cAzRUcyMMhAqlt8V\n6s8OvRoTF6X09dphlNSRPkGC1p9xfErgqQbVqCyd5jF/SDXSQyCNMe35HKnbILTL\nFRTc+nSGO07YJHUh2xc3TKegAWSR2ryrTJ5EW8aW/0BJc/uUals9thFDu3aKPJ6X\nJof8aOvWHYOJRgZ3eHGBdOzk0LJfEHytJpUtMpR+joNYHwzhejTxWfL9IH2ysLIl\nmHW6sCDGeWvigHfva51CcS5to9NdIzpsdc1FXxHSpQKBgQD+95VoV89QXTkAUa+a\nuJjgNBznPC4DeStIzsb6v0RKj7jSsepaH+cO/JxeU5Jpaf5XQgAUJBJK6pFvwg/+\npeICSqFePmY0FLSinht/VSjGfMHecLrKVN64ch0pNeC8XmO5erOYVHQGWhcDM1EN\n3ZrO7gootYyoDM7IdHSspY+m7QKBgQDKPoN1AiZC3tbIEpqR+DmhzFhat6li87lf\nLhnJbBD7NsXU8HsXuJ4c0sLkNtbh/OCVDenPEeIE6CQQPdppmh5xoks4bUD7MTCl\nDqn6OiqM0iD7yO1NaDkdhmHPRUJC9oSiqR85L8j1MH16mMY29s2MgFU9Bxpbx38t\nJ0FM1pmtewKBgQDRaQHysGRayiZeB7lmJ4WQZ9zxYvEb8zJE22h8XAm3/7E6g9xK\nZ3d8TKgVpShUojS+8DtmT3Yix+Pp2YcPjKlDXo6I/FEvJ25xPdCx1XznAWKt0wLn\n2asP7NHcnh7WN+RKW+gUDhE5glbyTvycmc1jdgksBGjhQZu48kU948FHxQKBgHC4\nfO5HP2n/53flno8C6aQ7T3dobBlBvCzHdgnkmGZbtdGkIwcql7163rLxubyFA+sv\nsQP/dJjFhewjfUtkYdl12jTd99zJItKsJKLZroOETmvnJhQBpevFzVgHwxGtcmly\nl3t5HalC2HzvD3LtBc1sbZWxEsjanRBek6+u4EJnAoGBAPMGmAjWzc5YSJ2XrKoC\nzii+QURv4kIc74/FFACUDatqpCLavoZ7anqVw00PGDv4DlkMRZjldTPEC8TUOJGc\nLzG0cgSBb7RyR8MLM58Z/iD5yCHxZb9Ib6miKA+Fl7ypN/BgrfFj2IcLxzX8iXkz\nzCU6Il4i+GqnKqXZcWaDEmhD\n-----END PRIVATE KEY-----\n",
+  "client_email": "docker-pusher@accenture-a5bf3.iam.gserviceaccount.com",
+  "client_id": "116125002438811832525",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/docker-pusher%40accenture-a5bf3.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
